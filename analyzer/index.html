@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Rental Property Analyzer | Crouse Deal Flow</title>
+<meta name="description" content="Free Excel spreadsheet to underwrite up to 5 rental properties side by side, with vacancy, repairs, and CapEx reserves built in. From Michael Crouse, a working Southern Illinois landlord.">
+<meta property="og:title" content="Free Rental Property Analyzer | Crouse Deal Flow">
+<meta property="og:description" content="Underwrite up to 5 rentals side by side. Vacancy and reserves built in. DSCR, cap rate, cash-on-cash and more, with pass/fail benchmarks.">
+<meta property="og:url" content="https://crousedealflow.com/analyzer/">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1F3A5F; --navy-deep:#142840; --copper:#B87333; --copper-soft:#E8C4A0;
+    --ink:#1B2430; --muted:#5B6675; --line:#DDE3EA; --bg:#FFFFFF; --bg-alt:#F5F7FA;
+    --pass:#1E7A46; --fail:#B42318;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+  a{color:var(--navy)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+  /* header */
+  header{background:var(--navy-deep);border-bottom:3px solid var(--copper)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{color:#fff;text-decoration:none;font-weight:700;letter-spacing:.2px}
+  .brand span{color:var(--copper-soft)}
+  header nav a{color:#C9D3DF;text-decoration:none;font-size:15px;margin-left:22px}
+  header nav a:hover{color:#fff}
+
+  /* hero */
+  .hero{background:linear-gradient(180deg,var(--navy) 0%,var(--navy-deep) 100%);color:#fff;padding:64px 0 72px}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+  .eyebrow{display:inline-block;font-size:13px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--copper-soft);margin-bottom:14px}
+  h1{font-family:"Source Serif 4",Georgia,serif;font-size:46px;line-height:1.12;font-weight:700;margin-bottom:18px}
+  .lede{font-size:19px;color:#D5DDE7;max-width:540px}
+  .hero ul{list-style:none;margin-top:24px}
+  .hero li{padding-left:26px;position:relative;margin:8px 0;color:#E6ECF2}
+  .hero li::before{content:"";position:absolute;left:0;top:10px;width:12px;height:12px;border-radius:2px;background:var(--copper)}
+
+  /* form card */
+  .card{background:#fff;color:var(--ink);border-radius:10px;padding:30px;box-shadow:0 18px 40px rgba(0,0,0,.28);border-top:5px solid var(--copper)}
+  .card h2{font-size:22px;margin-bottom:6px}
+  .card p.small{font-size:15px;color:var(--muted);margin-bottom:18px}
+  label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
+  input[type=email],input[type=text]{width:100%;font:inherit;padding:13px 14px;border:1.5px solid var(--line);border-radius:6px;margin-bottom:14px;background:#fff;color:var(--ink)}
+  input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(31,58,95,.15)}
+  button{width:100%;font:inherit;font-weight:700;font-size:17px;padding:14px;border:0;border-radius:6px;background:var(--copper);color:#fff;cursor:pointer;transition:background .15s}
+  button:hover{background:#A0632B}
+  .fine{font-size:13px;color:var(--muted);margin-top:12px;text-align:center}
+
+  section{padding:72px 0}
+  section.alt{background:var(--bg-alt)}
+  h2.sec{font-family:"Source Serif 4",Georgia,serif;font-size:34px;line-height:1.2;margin-bottom:12px;color:var(--navy-deep)}
+  .sec-sub{color:var(--muted);max-width:640px;margin-bottom:36px}
+
+  /* features */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .feat{background:#fff;border:1px solid var(--line);border-radius:8px;padding:24px}
+  .feat .num{font-family:"Source Serif 4",Georgia,serif;font-size:30px;font-weight:700;color:var(--copper);line-height:1}
+  .feat h3{font-size:18px;margin:10px 0 6px}
+  .feat p{font-size:15.5px;color:var(--muted)}
+
+  /* preview */
+  .preview{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 6px 20px rgba(20,40,64,.08)}
+  .preview-bar{background:var(--navy);color:#fff;font-weight:700;font-size:14px;padding:10px 16px;letter-spacing:.5px;border-bottom:3px solid var(--copper)}
+  .table-scroll{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:560px}
+  th,td{padding:10px 14px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  thead th{background:#EEF2F6;font-weight:600;color:var(--navy-deep)}
+  tr.strong td{font-weight:700}
+  .pass{color:var(--pass);font-weight:700}
+  .fail{color:var(--fail);font-weight:700}
+  .caption{font-size:13px;color:var(--muted);margin-top:12px}
+
+  /* why */
+  .why{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+  .why p{margin-bottom:16px}
+  .callout{background:var(--navy-deep);color:#E6ECF2;border-radius:8px;padding:28px;border-left:5px solid var(--copper)}
+  .callout .big{font-family:"Source Serif 4",Georgia,serif;font-size:26px;color:#fff;line-height:1.25;margin-bottom:10px}
+
+  /* about */
+  .about{display:flex;gap:28px;align-items:flex-start;max-width:780px}
+  .mono{flex:0 0 72px;height:72px;border-radius:50%;background:var(--navy);color:var(--copper-soft);display:flex;align-items:center;justify-content:center;font-family:"Source Serif 4",Georgia,serif;font-weight:700;font-size:26px}
+
+  /* bottom cta */
+  .cta{background:var(--navy);color:#fff;text-align:center}
+  .cta h2.sec{color:#fff}
+  .cta .sec-sub{color:#C9D3DF;margin-left:auto;margin-right:auto}
+  .cta .card{max-width:440px;margin:0 auto;text-align:left}
+
+  footer{background:var(--navy-deep);color:#9FB0C3;font-size:14px;padding:32px 0;text-align:center}
+  footer a{color:var(--copper-soft)}
+  footer p{margin:4px 0}
+
+  @media (max-width:860px){
+    .hero .wrap,.why{grid-template-columns:1fr;gap:32px}
+    .grid3{grid-template-columns:1fr}
+    h1{font-size:36px}
+    header nav a:not(.keep){display:none}
+    section{padding:56px 0}
+    .hero{padding:44px 0 52px}
+  }
+  @media (max-width:420px){ .card{padding:22px} h1{font-size:31px} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/">Crouse <span>Deal Flow</span></a>
+    <nav>
+      <a href="/#services">Services</a>
+      <a href="/#about">About</a>
+      <a class="keep" href="/#booking">Book a Call</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Free Excel Download</span>
+      <h1>Run the numbers like the bank will.</h1>
+      <p class="lede">A rental property analyzer with vacancy, repairs, and CapEx reserves built in, so a deal can't look better on paper than it will in your bank account.</p>
+      <ul>
+        <li>Compare up to 5 properties side by side</li>
+        <li>DSCR, cap rate, cash-on-cash, and 4 more key metrics</li>
+        <li>Automatic PASS / FAIL against benchmarks you can set</li>
+      </ul>
+    </div>
+
+    <div class="card" id="get">
+      <h2>Get the spreadsheet</h2>
+      <p class="small">Enter your email and I'll send the download link right away.</p>
+      <!-- KIT FORM: replace https://app.kit.com/forms/10109526/subscriptions with the action URL from your Kit form's HTML embed code (same URL in both forms on this page) -->
+      <form action="https://app.kit.com/forms/10109526/subscriptions" method="post">
+        <label for="fn1">First name</label>
+        <input id="fn1" type="text" name="fields[first_name]" autocomplete="given-name" placeholder="Michael">
+        <label for="em1">Email</label>
+        <input id="em1" type="email" name="email_address" required autocomplete="email" placeholder="you@example.com">
+        <button type="submit">Send Me the Analyzer</button>
+      </form>
+      <p class="fine">Free. No spam. Unsubscribe anytime.</p>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2 class="sec">What's inside</h2>
+    <p class="sec-sub">One Excel workbook. Fill in the yellow cells and everything else calculates for you.</p>
+    <div class="grid3">
+      <div class="feat"><div class="num">5</div><h3>Property tabs</h3><p>One deal per tab. Purchase price, financing, rent, and every operating expense, with nothing left out.</p></div>
+      <div class="feat"><div class="num">1</div><h3>Portfolio summary</h3><p>Pulls from all five tabs automatically. Compare deals side by side and see your combined NOI and cash flow.</p></div>
+      <div class="feat"><div class="num">7</div><h3>Benchmark checks</h3><p>DSCR, cap rate, cash-on-cash, 1% rule, break-even ratio, GRM, and expense ratio, each with a clear PASS or FAIL.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2 class="sec">See where a deal stands at a glance</h2>
+    <p class="sec-sub">The Summary tab lines your properties up next to each other. Here's a sample with example numbers:</p>
+    <div class="preview">
+      <div class="preview-bar">RENTAL PORTFOLIO SUMMARY</div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Metric</th><th>Maple St Duplex</th><th>Oak Ave 4-Plex</th><th>Elm St SFR</th></tr></thead>
+          <tbody>
+            <tr><td>Purchase Price</td><td>$185,000</td><td>$340,000</td><td>$120,000</td></tr>
+            <tr><td>Gross Monthly Rent</td><td>$2,100</td><td>$3,900</td><td>$1,150</td></tr>
+            <tr><td>NOI (Annual)</td><td>$15,420</td><td>$26,830</td><td>$7,240</td></tr>
+            <tr class="strong"><td>Cash Flow (Monthly)</td><td>$268</td><td>$412</td><td>($96)</td></tr>
+            <tr><td>Cap Rate</td><td>8.3%</td><td>7.9%</td><td>6.0%</td></tr>
+            <tr><td>Cash-on-Cash</td><td>6.9%</td><td>5.7%</td><td>(3.8%)</td></tr>
+            <tr><td>DSCR</td><td>1.26x</td><td>1.23x</td><td>0.86x</td></tr>
+            <tr class="strong"><td>DSCR Status</td><td class="pass">PASS</td><td class="fail">FAIL</td><td class="fail">FAIL</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="caption">Example values for illustration only. Your results depend on the numbers you enter.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap why">
+    <div>
+      <h2 class="sec">Why I built it this way</h2>
+      <p>Most free rental calculators leave out the costs that actually sink deals: vacancy, repairs, and capital reserves for the roof and HVAC you'll eventually replace. Skip those, and almost anything cash flows on paper.</p>
+      <p>This one includes them by default. Each property is checked against the same benchmarks lenders and experienced investors use, so you know whether a deal truly works before you make an offer.</p>
+    </div>
+    <div class="callout">
+      <div class="big">If a deal only works at 0% vacancy, it doesn't work.</div>
+      <p>The analyzer won't let you forget that.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="about">
+      <div class="mono">MC</div>
+      <div>
+        <h2 class="sec" style="font-size:26px">From a working landlord</h2>
+        <p>I'm Michael Crouse. I own and manage 12+ rental units in Southern Illinois, built with the BRRRR method, and I still work a day job. I share real numbers and real deals, including the ones that didn't go as planned.</p>
+        <p style="margin-top:12px">Want a second set of eyes on a deal? <a href="/#services">See how I work</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2 class="sec">Get the free analyzer</h2>
+    <p class="sec-sub">Delivered to your inbox in about a minute.</p>
+    <div class="card">
+      <form action="https://app.kit.com/forms/10109526/subscriptions" method="post">
+        <label for="fn2">First name</label>
+        <input id="fn2" type="text" name="fields[first_name]" autocomplete="given-name" placeholder="Michael">
+        <label for="em2">Email</label>
+        <input id="em2" type="email" name="email_address" required autocomplete="email" placeholder="you@example.com">
+        <button type="submit">Send Me the Analyzer</button>
+      </form>
+      <p class="fine">Free. No spam. Unsubscribe anytime.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Crouse Deal Flow · Michael Crouse · Southern Illinois</p>
+    <p>Educational tool only. Not financial, legal, or tax advice. <a href="/">crousedealflow.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
