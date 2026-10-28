@@ -403,11 +403,54 @@
       font-size: 1rem;
     }
 
+    /* FREE ANALYZER */
+    .hero-free-link {
+      display: inline-block;
+      margin-top: 1.25rem;
+      color: var(--grain-lt);
+      font-size: 0.9rem;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(217,152,104,0.4);
+      padding-bottom: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .hero-free-link:hover { color: var(--white); border-color: var(--grain); }
+    .freebie { background: var(--white); border-top: 1px solid var(--rule-lt); }
+    .freebie-inner {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .freebie-list {
+      list-style: none;
+      background: var(--soil);
+      border-radius: 8px;
+      padding: 1rem 2.5rem;
+    }
+    .freebie-list li {
+      display: flex; align-items: center; gap: 1.25rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid rgba(193,122,74,0.25);
+      color: #b9c0ca;
+      font-size: 0.95rem;
+    }
+    .freebie-list li:last-child { border-bottom: none; }
+    .freebie-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--grain);
+      min-width: 2rem;
+      text-align: center;
+      line-height: 1;
+    }
+
     /* RESPONSIVE */
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .who-grid, .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .booking-options { grid-template-columns: 1fr; }
+      .who-grid, .about-grid, .freebie-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .freebie-list { padding: 0.5rem 1.5rem; }
+      .booking-options { grid-template-columns: 1fr !important; }
       .hero-stat-row { gap: 2rem; }
     }
   </style>
@@ -421,6 +464,7 @@
       <a href="#who">Who I Help</a>
       <a href="#services">Services</a>
       <a href="#about">About</a>
+      <a href="/analyzer/">Free Analyzer</a>
       <a href="#booking" class="nav-cta">Book a Call</a>
     </div>
   </nav>
@@ -437,6 +481,7 @@
         <a href="#booking" class="btn-primary">Book a Consultation</a>
         <a href="#services" class="btn-secondary">See How I Work</a>
       </div>
+      <a href="/analyzer/" class="hero-free-link">Running numbers on your own? Get the free Rental Property Analyzer →</a>
       <div class="hero-stat-row">
         <div class="hero-stat">
           <div class="hero-stat-num">12+</div>
@@ -511,7 +556,7 @@
         <span class="service-tag">Most Popular</span>
         <h3>Deal Review</h3>
         <p>Send me a deal you're considering. I'll run the numbers, stress-test the assumptions, flag the risks you might be missing, and give you a clear recommendation.</p>
-        <div class="service-price">$147</div>
+        <div class="service-price">$197</div>
         <div class="service-price-note">Flat fee per deal</div>
         <ul class="service-includes">
           <li>Full underwriting review</li>
@@ -526,7 +571,7 @@
         <span class="service-tag">Strategy</span>
         <h3>Strategy Call</h3>
         <p>You have questions, a situation, or a direction you're trying to think through. We get on a call, I listen, and we build a clear path forward for your next move.</p>
-        <div class="service-price">$197</div>
+        <div class="service-price">$147</div>
         <div class="service-price-note">Per hour</div>
         <ul class="service-includes">
           <li>60-minute Zoom session</li>
@@ -552,6 +597,24 @@
         <a href="https://calendly.com/michael-crousedealflow/new-meeting" target="_blank" class="btn-primary" style="display:block; text-align:center; margin-top:1.5rem;">Book This →</a>
       </div>
 
+    </div>
+  </section>
+
+  <!-- FREE ANALYZER -->
+  <section class="freebie" id="analyzer">
+    <div class="freebie-inner">
+      <div>
+        <div class="section-eyebrow">Free Tool</div>
+        <h2 class="section-title">Run the numbers yourself first</h2>
+        <div class="rule"></div>
+        <p class="section-sub">The same underwriting framework I use, as a free spreadsheet. Vacancy, repairs, and CapEx reserves are built in, so a deal can't look better on paper than it will in your bank account.</p>
+        <a href="/analyzer/" class="btn-primary" style="margin-top:2rem;">Get the Free Analyzer →</a>
+      </div>
+      <ul class="freebie-list">
+        <li><span class="freebie-num">5</span><span>Properties side by side, one tab each</span></li>
+        <li><span class="freebie-num">7</span><span>Key metrics, including DSCR, cap rate, and cash-on-cash</span></li>
+        <li><span class="freebie-num">✓</span><span>Automatic PASS / FAIL against benchmarks you set</span></li>
+      </ul>
     </div>
   </section>
 
